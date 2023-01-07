@@ -314,7 +314,7 @@ public class Ex2_1 {
     //but it run on threads and each thread run on one file
     public static int getNumOfLinesThreadPool(String[] fileNames) {
         int numOfLines = 0;
-        ExecutorService thread_pool = Executors.newFixedThreadPool(4);
+        ExecutorService thread_pool = Executors.newFixedThreadPool(fileNames.length);
         MyCallable[] tasks = new MyCallable[fileNames.length];
         for (int i = 0; i < fileNames.length; i++) {
             tasks[i] = new MyCallable(fileNames[i]);
