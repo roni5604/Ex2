@@ -11,13 +11,6 @@ import java.util.concurrent.Callable;
 public class MyCallable implements Callable<Integer> {
     private String fileName;// The name of the file to be read
 
-    /*
-        * Method: MyCallable
-        * Description: This is the constructor for the MyCallable class.
-        * Parameters: String fileName - the name of the file to be read.
-        * Returns: None.
-
-     */
 
     /*
     *method: MyCallable
