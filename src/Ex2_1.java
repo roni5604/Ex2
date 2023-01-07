@@ -16,138 +16,21 @@ public class Ex2_1 {
         System.out.println("Do you want to create a file test? (y/n)");
         String answer = in.nextLine();
         if (answer.equals("y")) {
-            long startTime, endTime;
-            String[] files;
-            System.out.println(" ");
-            System.out.println("compareRunningTime first seed 1000 bound 10000 ");
-            files = createTextFiles(10, 100, 100);
-            System.out.println("numer of lines in all file = " + getNumOfLines(files));
-            startTime = System.currentTimeMillis();
-            getNumOfLines(files);
-            endTime = System.currentTimeMillis();
-            System.out.println("getNumOfLines running time: " + (endTime - startTime) + "ms");
-
-            startTime = System.currentTimeMillis();
-            getNumOfLinesThreads(files);
-            endTime = System.currentTimeMillis();
-            System.out.println("getNumOfLinesThreads running time: " + (endTime - startTime) + "ms");
-
-            startTime = System.currentTimeMillis();
-            getNumOfLinesThreadPool(files);
-            endTime = System.currentTimeMillis();
-            System.out.println("getNumOfLinesThreadPool running time: " + (endTime - startTime) + "ms");
-
-
-            System.out.println(" ");
-            System.out.println("compareRunningTime second 100 files seed 100 bound 100 ");
-            files = createTextFiles(100, 100, 100);
-            System.out.println("numer of lines in all file = " + getNumOfLines(files));
-            startTime = System.currentTimeMillis();
-            getNumOfLines(files);
-            endTime = System.currentTimeMillis();
-            System.out.println("getNumOfLines running time: " + (endTime - startTime) + "ms");
-
-            startTime = System.currentTimeMillis();
-            getNumOfLinesThreads(files);
-            endTime = System.currentTimeMillis();
-            System.out.println("getNumOfLinesThreads running time: " + (endTime - startTime) + "ms");
-
-            startTime = System.currentTimeMillis();
-            getNumOfLinesThreadPool(files);
-            endTime = System.currentTimeMillis();
-            System.out.println("getNumOfLinesThreadPool running time: " + (endTime - startTime) + "ms");
-
-            System.out.println(" ");
-            System.out.println("compareRunningTime third 1000 files seed 1000 bound 1000 ");
-            files = createTextFiles(1000, 1000, 1000);
-            System.out.println("numer of lines in all file = " + getNumOfLines(files));
-            startTime = System.currentTimeMillis();
-            getNumOfLines(files);
-            endTime = System.currentTimeMillis();
-            System.out.println("getNumOfLines running time: " + (endTime - startTime) + "ms");
-
-            startTime = System.currentTimeMillis();
-            getNumOfLinesThreads(files);
-            endTime = System.currentTimeMillis();
-            System.out.println("getNumOfLinesThreads running time: " + (endTime - startTime) + "ms");
-
-            startTime = System.currentTimeMillis();
-            getNumOfLinesThreadPool(files);
-            endTime = System.currentTimeMillis();
-            System.out.println("getNumOfLinesThreadPool running time: " + (endTime - startTime) + "ms");
-
-            System.out.println(" ");
-            System.out.println("compareRunningTime fourth 1000 files seed 10000 bound 10000 ");
-            files = createTextFiles(1000, 10000, 10000);
-            System.out.println("numer of lines in all file = " + getNumOfLines(files));
-            startTime = System.currentTimeMillis();
-            getNumOfLines(files);
-            endTime = System.currentTimeMillis();
-            System.out.println("getNumOfLines running time: " + (endTime - startTime) + "ms");
-
-            startTime = System.currentTimeMillis();
-            getNumOfLinesThreads(files);
-            endTime = System.currentTimeMillis();
-            System.out.println("getNumOfLinesThreads running time: " + (endTime - startTime) + "ms");
-
-            startTime = System.currentTimeMillis();
-            getNumOfLinesThreadPool(files);
-            endTime = System.currentTimeMillis();
-            System.out.println("getNumOfLinesThreadPool running time: " + (endTime - startTime) + "ms");
+            compareRunningTime();
         }
         else {
             System.out.println("Goodbye");
         }
 
-
-//        compareRunningTime();
-
     }
 
     private static void compareRunningTime() {
-        // TODO Auto-generated method stub
-        String[] files = createTextFiles(10, 1000 , 100);
+        long startTime, endTime;
+        String[] files;
         System.out.println(" ");
-        System.out.println("compareRunningTime first seed 1000 and bound 100 ");
-        System.out.println("numer of lines in all file = "+getNumOfLines(files));
-        long startTime = System.currentTimeMillis();
-        getNumOfLines(files);
-        long endTime = System.currentTimeMillis();
-        System.out.println("getNumOfLines running time: " + (endTime - startTime) + "ms");
-
-        startTime = System.currentTimeMillis();
-        getNumOfLinesThreads(files);
-        endTime = System.currentTimeMillis();
-        System.out.println("getNumOfLinesThreads running time: " + (endTime - startTime) + "ms");
-
-        startTime = System.currentTimeMillis();
-        getNumOfLinesThreadPool(files);
-        endTime = System.currentTimeMillis();
-        System.out.println("getNumOfLinesThreadPool running time: " + (endTime - startTime) + "ms");
-
-        System.out.println(" ");
-        System.out.println("compareRunningTime second seed 10000 and bound 100 ");
-        files = createTextFiles(10, 10000 , 100);
-        System.out.println("numer of lines in all file = "+getNumOfLines(files));
-        startTime = System.currentTimeMillis();
-        getNumOfLines(files);
-        endTime = System.currentTimeMillis();
-        System.out.println("getNumOfLines running time: " + (endTime - startTime) + "ms");
-
-        startTime = System.currentTimeMillis();
-        getNumOfLinesThreads(files);
-        endTime = System.currentTimeMillis();
-        System.out.println("getNumOfLinesThreads running time: " + (endTime - startTime) + "ms");
-
-        startTime = System.currentTimeMillis();
-        getNumOfLinesThreadPool(files);
-        endTime = System.currentTimeMillis();
-        System.out.println("getNumOfLinesThreadPool running time: " + (endTime - startTime) + "ms");
-
-        System.out.println(" ");
-        System.out.println("compareRunningTime third seed 100000 and bound 100 ");
-        files = createTextFiles(10, 100000 , 100);
-        System.out.println("numer of lines in all file = "+getNumOfLines(files));
+        System.out.println("compareRunningTime first seed 1000 bound 10000 ");
+        files = createTextFiles(10, 100, 100);
+        System.out.println("numer of lines in all file = " + getNumOfLines(files));
         startTime = System.currentTimeMillis();
         getNumOfLines(files);
         endTime = System.currentTimeMillis();
@@ -165,9 +48,9 @@ public class Ex2_1 {
 
 
         System.out.println(" ");
-        System.out.println("compareRunningTime fourth seed 1000 bound 1000 ");
-        files = createTextFiles(10, 1000 , 1000);
-        System.out.println("numer of lines in all file = "+getNumOfLines(files));
+        System.out.println("compareRunningTime second 100 files seed 100 bound 100 ");
+        files = createTextFiles(100, 100, 100);
+        System.out.println("numer of lines in all file = " + getNumOfLines(files));
         startTime = System.currentTimeMillis();
         getNumOfLines(files);
         endTime = System.currentTimeMillis();
@@ -184,29 +67,9 @@ public class Ex2_1 {
         System.out.println("getNumOfLinesThreadPool running time: " + (endTime - startTime) + "ms");
 
         System.out.println(" ");
-        System.out.println("compareRunningTime fifth seed 1000 bound 10000 ");
-        files = createTextFiles(10, 1000 , 10000);
-        System.out.println("numer of lines in all file = "+ getNumOfLines(files));
-        startTime = System.currentTimeMillis();
-        getNumOfLines(files);
-        endTime = System.currentTimeMillis();
-        System.out.println("getNumOfLines running time: " + (endTime - startTime) + "ms");
-
-        startTime = System.currentTimeMillis();
-        getNumOfLinesThreads(files);
-        endTime = System.currentTimeMillis();
-        System.out.println("getNumOfLinesThreads running time: " + (endTime - startTime) + "ms");
-
-        startTime = System.currentTimeMillis();
-        getNumOfLinesThreadPool(files);
-        endTime = System.currentTimeMillis();
-        System.out.println("getNumOfLinesThreadPool running time: " + (endTime - startTime) + "ms");
-
-
-        System.out.println(" ");
-        System.out.println("compareRunningTime sixth 100 files seed 100 bound 100 ");
-        files = createTextFiles(100, 100 , 100);
-        System.out.println("numer of lines in all file = "+ getNumOfLines(files));
+        System.out.println("compareRunningTime third 1000 files seed 1000 bound 1000 ");
+        files = createTextFiles(1000, 1000, 1000);
+        System.out.println("numer of lines in all file = " + getNumOfLines(files));
         startTime = System.currentTimeMillis();
         getNumOfLines(files);
         endTime = System.currentTimeMillis();
@@ -223,9 +86,9 @@ public class Ex2_1 {
         System.out.println("getNumOfLinesThreadPool running time: " + (endTime - startTime) + "ms");
 
         System.out.println(" ");
-        System.out.println("compareRunningTime seventh 1000 files seed 1000 bound 1000 ");
-        files = createTextFiles(1000, 1000 , 1000);
-        System.out.println("numer of lines in all file = "+ getNumOfLines(files));
+        System.out.println("compareRunningTime fourth 1000 files seed 10000 bound 10000 ");
+        files = createTextFiles(1000, 10000, 10000);
+        System.out.println("numer of lines in all file = " + getNumOfLines(files));
         startTime = System.currentTimeMillis();
         getNumOfLines(files);
         endTime = System.currentTimeMillis();
@@ -240,29 +103,17 @@ public class Ex2_1 {
         getNumOfLinesThreadPool(files);
         endTime = System.currentTimeMillis();
         System.out.println("getNumOfLinesThreadPool running time: " + (endTime - startTime) + "ms");
-
-        System.out.println(" ");
-        System.out.println("compareRunningTime eighth 1000 files seed 10000 bound 10000 ");
-        files = createTextFiles(1000, 10000 , 10000);
-        System.out.println("numer of lines in all file = "+ getNumOfLines(files));
-        startTime = System.currentTimeMillis();
-        getNumOfLines(files);
-        endTime = System.currentTimeMillis();
-        System.out.println("getNumOfLines running time: " + (endTime - startTime) + "ms");
-
-        startTime = System.currentTimeMillis();
-        getNumOfLinesThreads(files);
-        endTime = System.currentTimeMillis();
-        System.out.println("getNumOfLinesThreads running time: " + (endTime - startTime) + "ms");
-
-        startTime = System.currentTimeMillis();
-        getNumOfLinesThreadPool(files);
-        endTime = System.currentTimeMillis();
-        System.out.println("getNumOfLinesThreadPool running time: " + (endTime - startTime) + "ms");
-
 
     }
 
+    /**
+     * This method creates a number of text files with random numbers
+     * @param n - the number of files to create
+     * @param seed - the number of lines in each file
+     * @param bound - the bound of the random numbers
+     * @return - an array of the files names
+     * @throws FileNotFoundException
+     */
     public static String[] createTextFiles(int n, int seed, int bound){
         String[] fileNames = new String[n];
         Random rand = new Random(seed);
@@ -281,6 +132,12 @@ public class Ex2_1 {
 
    //this method run on time of o(n) because it run on all files
    // and count lines in each file and sum all lines in all files
+   /**
+    * This method returns the number of lines in all the files
+    * @param fileNames - an array of the files names
+    * @return - the number of lines in all the files
+    * @throws FileNotFoundException
+    */
     public static int getNumOfLines(String[] fileNames){
         int numOfLines = 0;
         for (String fileName : fileNames) {
@@ -299,6 +156,13 @@ public class Ex2_1 {
     //the getNumOfLinesThreads method run on time of o(n) because it run on all files
     //and count lines in each file and sum all lines in all files
     //but it run on threads and each thread run on one file
+
+    /**
+     * This method returns the number of lines in all the files using threads
+     * @param fileNames - an array of the files names
+     * @return - the number of lines in all the files
+     * @throws FileNotFoundException
+     */
     public static int getNumOfLinesThreads(String[] fileNames) {
         int numOfLines = 0;
         MyThread[] threads = new MyThread[fileNames.length];
@@ -321,6 +185,14 @@ public class Ex2_1 {
     //the getNumOfLinesThreadPool method run on time of o(n) because it run on all files
     //and count lines in each file and sum all lines in all files
     //but it run on threads and each thread run on one file
+
+    /**
+     * This method returns the number of lines in all the files using thread pool
+     * @param fileNames - an array of the files names
+     * @return - the number of lines in all the files
+     * @throws FileNotFoundException
+     * @throws InterruptedException
+     */
     public static int getNumOfLinesThreadPool(String[] fileNames) {
         int numOfLines = 0;
         ExecutorService thread_pool = Executors.newFixedThreadPool(fileNames.length);
