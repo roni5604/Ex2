@@ -196,13 +196,9 @@ public class Ex2_1 {
     public static int getNumOfLinesThreadPool(String[] fileNames) {
         int numOfLines = 0;
         ExecutorService thread_pool = Executors.newFixedThreadPool(fileNames.length);
-        MyCallable[] tasks = new MyCallable[fileNames.length];
-        for (int i = 0; i < fileNames.length; i++) {
-            tasks[i] = new MyCallable(fileNames[i]);
-        }
         try {
             for (int i = 0; i < fileNames.length; i++) {
-                numOfLines += thread_pool.submit(tasks[i]).get();
+                numOfLines += thread_pool.submit(new MyCallable(fileNames[i])).get();
             }
         } catch (Exception e) {
             e.printStackTrace();

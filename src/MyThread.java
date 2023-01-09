@@ -8,7 +8,7 @@ import java.util.Scanner;
  */
 public class MyThread extends Thread {
     private String fileName;// The name of the file to be read
-    private int numOfLines;// The number of lines in the file
+    private int numOfLines=0;// The number of lines in the file
 
 
     /**
