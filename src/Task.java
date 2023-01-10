@@ -84,22 +84,6 @@ public class Task implements Callable {
         return this.callable;
     }
 
-    /**
-     * compares the priority of the task to the priority of another task
-     * @param otherTask the other task to compare to
-     * @return 1 if the priority of the task is greater than the priority of the other task
-     *        -1 if the priority of the task is less than the priority of the other task
-     *        0 if the priority of the task is equal to the priority of the other task
-     */
-    public int compareTo(Task otherTask) { // section 5
-        if (this.taskType.getPriorityValue() > otherTask.taskType.getPriorityValue()) {
-            return 1;
-        } else if (this.taskType.getPriorityValue() < otherTask.taskType.getPriorityValue()) {
-            return -1;
-        } else {
-            return 0;
-        }
-    }
 
     @Override
     /**

@@ -1,5 +1,5 @@
 
-import java.util.PriorityQueue;
+import java.util.HashMap;
 import java.util.Queue;
 import java.util.concurrent.*;
 
@@ -17,11 +17,14 @@ public class CustomExecutor  extends ThreadPoolExecutor {
     private final int maxNumOfThreads = numOfProcessors - 1; // section 6
     private int currentMaxPriority;// the current max priority of the tasks in the queue
 
+    private HashMap<Integer, Integer> priorityToNumOfThreads = new HashMap<>(); // section 7
+
+    private  int count_max_priority = 0;
     /**
      * Creates a new CustomExecutor that will, upon running, execute the given
      */
     public CustomExecutor() {
-        super(1, 1, 300L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
+        super(Runtime.getRuntime().availableProcessors()/2, Runtime.getRuntime().availableProcessors()-1, 300L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
     }
 
 
@@ -44,6 +47,10 @@ public class CustomExecutor  extends ThreadPoolExecutor {
         Task task = Task.createTask(callable, taskType);
 //        tasks.add(task);
         TaskFactory<T> taskFactory = new TaskFactory<T>(task.getCallable(), taskType.getPriorityValue());
+        if(task.getPriority() < currentMaxPriority){
+            currentMaxPriority = task.getPriority();
+        }
+        priorityToNumOfThreads.put(taskType.getPriorityValue(), priorityToNumOfThreads.getOrDefault(taskType.getPriorityValue(), 0) + 1);
         execute(taskFactory);
         return taskFactory;
     }
@@ -61,12 +68,20 @@ public class CustomExecutor  extends ThreadPoolExecutor {
             Task task = (Task) callable;
 //            tasks.add(task);
             TaskFactory<T> taskFactory = new TaskFactory<T>(task.getCallable(), task.getPriority());
+            if(task.getPriority() < currentMaxPriority){
+                currentMaxPriority = task.getPriority();
+            }
+            priorityToNumOfThreads.put(task.getPriority(), priorityToNumOfThreads.getOrDefault(task.getPriority(), 0) + 1);
             execute(taskFactory);
             return taskFactory;
         } else {
             Task task = Task.createTask(callable);
 //            tasks.add(task);
             TaskFactory<T> taskFactory = new TaskFactory<T>(task.getCallable(), task.getPriority());
+            if(task.getPriority() < currentMaxPriority){
+                currentMaxPriority = task.getPriority();
+            }
+            priorityToNumOfThreads.put(task.getPriority(), priorityToNumOfThreads.getOrDefault(task.getPriority(), 0) + 1);
             execute(taskFactory);
             return taskFactory;
         }
@@ -82,17 +97,20 @@ public class CustomExecutor  extends ThreadPoolExecutor {
 
     @Override
     /**
-     * after the executor has no more tasks to execute, it shuts down
+     * before executing a task, checks if the task's priority is higher than the current max priority
+     * if it is, the current max priority is updated
+     * @param r the task to be executed
+     *          @param t the thread that will execute the task
+     *
      */
-    protected void afterExecute(Runnable r, Throwable t) {
-
-        if (!super.getQueue().isEmpty()) {
-            if (((TaskFactory) r).getPriority() < ((TaskFactory) super.getQueue().peek()).getPriority()) {
-                this.currentMaxPriority = ((TaskFactory) super.getQueue().peek()).getPriority();
-            }
+    protected void beforeExecute(Thread t, Runnable r) {
+     priorityToNumOfThreads.put(((TaskFactory) r).getPriority(), priorityToNumOfThreads.get(((TaskFactory) r).getPriority()) - 1);
+        if (((TaskFactory) r).getPriority() > currentMaxPriority) {
+            currentMaxPriority = ((TaskFactory) r).getPriority();
         }
-
     }
+
+
 
     /**
      * this method shuts down the executor after it has no more tasks to execute
@@ -107,7 +125,7 @@ public class CustomExecutor  extends ThreadPoolExecutor {
      * @return the current max priority of the tasks in the queue
      */
     public int getCurrentMax() { // section 10
-        return currentMaxPriority;
+        return this.currentMaxPriority;
     }
 
 

@@ -24,12 +24,14 @@ public class TaskFactory<T> extends FutureTask<T> implements Comparable<TaskFact
         this.priority = priority;
     }
 
+
+
     /**
      * returns the priority of the task
      * @return the priority of the task
      */
     public int getPriority() {
-        return priority;
+        return this.priority;
     }
 
     /**
