@@ -1,43 +1,25 @@
-
 import java.util.concurrent.Callable;
 
 /**
  * A Task is a class that implements the Callable interface and has a priority field
  * and a constructor that sets the priority field
  */
-public class Task implements Callable {
-    // This type is protected so that it can be accessed by the CustomExecutor class
+public class Task<T> implements Callable<T> {
     private TaskType taskType;// the type of the task
     private  int priority;// the priority of the task
-    private Callable callable;// the callable task to be executed
-
-
-
-    // this constructor is protected, so it can only be used by the TaskFactory class
+    private final Callable<T> callable;// the callable task to be executed
 
     /**
      * Creates a new Task that will, upon running, execute the given
+     * this constructor is protected, so it can only be used by the TaskFactory class
      * @param callable the callable task to be executed
      * @param taskType the type of the task
      * @param priority the priority of the task
      */
-    protected Task(Callable callable, TaskType taskType, int priority) {
+    protected Task(Callable<T> callable, TaskType taskType, int priority) {
         this.callable = callable;
         this.taskType = taskType;
         this.priority = priority;
-    }
-
-    /**
-     * returns the task
-     * @return the Task
-     */
-    public Task getTask() { // section 2
-        try {
-            return this;
-        } catch (Exception e) {
-            System.err.println("Error: " + e);
-        }
-        return null;
     }
 
     /**
@@ -45,8 +27,9 @@ public class Task implements Callable {
      * @param callable the callable task to be executed
      * @return the Task
      */
-    public static <T> Task createTask(Callable<T> callable){ // section 3 + 4
-        return new Task(callable,TaskType.OTHER, 3);
+    public static <T> Task<T> createTask(Callable<T> callable){ // section 3 + 4
+        TaskFactory<T> taskFactory = new TaskFactory<T>();
+        return taskFactory.createTask(callable);
     }
 
     /**
@@ -55,13 +38,13 @@ public class Task implements Callable {
      * @param taskType the type of the task
      * @return the Task
      */
-    public static <T> Task createTask(Callable<T> callable, TaskType taskType) { // section 3 + 4
-        return new Task(callable, taskType, taskType.getPriorityValue());
-
+    public static <T> Task<T> createTask(Callable<T> callable, TaskType taskType) { // section 3 + 4
+        TaskFactory<T> taskFactory = new TaskFactory<T>();
+        return taskFactory.createTask(callable, taskType);
     }
 
     /**
-     * returns the priority of the task
+     * this method is for getting the priority of the task
      * @return the priority of the task
      */
     public int getPriority() {
@@ -77,20 +60,45 @@ public class Task implements Callable {
     }
 
     /**
-     * returns the Callable task to be executed
+     * this method is to ge the callable task
      * @return the Callable task to be executed
      */
     public <T> Callable<T> getCallable(){
-        return this.callable;
+        return (Callable<T>) this.callable;
     }
 
+    /**
+     * this function is to return the callable task to be executed
+     * @return the callable task to be executed
+     */
+    public <T> Callable<T> setCallable(Callable<T> callable){
+        return (Callable<T>) this.callable;
+    }
 
     @Override
     /**
      * calls the callable task to be executed
      * @return the result of the callable task to be executed
      */
-    public Object call() throws Exception {
+    public T call() throws Exception {
         return this.callable.call();
     }
+
+    /**
+     * this function is to return the type of the task
+     * @return the task type
+     */
+    public TaskType getTaskType() {
+        return taskType;
+    }
+
+    /**
+     * sets the task type
+     * @param taskType the task type
+     */
+    public void setTaskType(TaskType taskType) {
+        this.taskType = taskType;
+    }
+
+
 }

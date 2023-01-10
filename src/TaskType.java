@@ -1,4 +1,3 @@
-
 public enum TaskType {
     COMPUTATIONAL(1) {
         @Override
